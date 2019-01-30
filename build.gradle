@@ -1,0 +1,62 @@
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id 'java'
+}
+
+lombok {
+    version = "1.18.4"
+    sha256 = "39f3922deb679b1852af519eb227157ef2dd0a21eec3542c8ce1b45f2df39742"
+}
+
+group 'es.eriktorr.pet'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.3.2'
+    mockitoVersion = '2.23.4'
+    csvVersion = '1.6'
+    hibernateValidatorVersion = '6.0.14.Final'
+    sl4jVersion = '1.7.25'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "io.projectreactor:reactor-bom:Californium-SR4"
+    }
+}
+
+dependencies {
+    implementation "io.projectreactor:reactor-core"
+
+    implementation "org.hibernate.validator:hibernate-validator:${hibernateValidatorVersion}"
+    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:${hibernateValidatorVersion}"
+    implementation 'javax.el:javax.el-api:3.0.1-b06'
+    implementation 'org.glassfish:javax.el:3.0.1-b11'
+
+    implementation "org.slf4j:slf4j-api:${sl4jVersion}"
+    implementation "org.slf4j:slf4j-simple:${sl4jVersion}"
+
+    testCompile 'io.projectreactor:reactor-test'
+    testCompile "org.apache.commons:commons-csv:${csvVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+}
+
+test {
+    useJUnitPlatform {
+        excludeTags 'integration', 'regression'
+    }
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+    failFast = true
+}

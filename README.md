@@ -42,7 +42,7 @@ interface TopSales {
 }
 ```
 
-## Just in time favorites
+### Just in time favorites
 
 Modify the previous case study to answer within 1 second or resend information from a previously cached list of promoted products.
 
@@ -77,10 +77,10 @@ class PollutionRadar {
 }
 ```
 
-## Overwhelmed by air polluters
+### Overwhelmed by air polluters
 
 Not everybody is committed to reducing the carbon footprint. In fact, our anti-pollution traffic radar is often overwhelmed by the sheer volume of cars in transit. Modify the previous case study to keep the newest pollutant cars recorded when the number of cars is so high that the pollution radar cannot keep up with the flow.
 
-## Additional output channels: errors and completion
+### Additional output channels: errors and completion
 
 Probably we will find good opportunities during the session for showing the differences between a successfully completed and a failed stream. Otherwise, we will create a simple example to illustrate the different output channels.

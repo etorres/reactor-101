@@ -11,16 +11,19 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.test.StepVerifier;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
 
 import static es.eriktorr.reactor_intro.pollution.Fuel.fuelFrom;
 
@@ -43,7 +46,17 @@ class PollutionRadarTest {
     @DisplayName("Polluting cars")
     @Test void
     detect_polluting_cars_in_traffic() {
-        assert false;
+        val pollutionRadar = new PollutionRadar(trafficScanner);
+
+        StepVerifier.create(pollutionRadar.pollutingCars())
+                .expectNextCount(344L)
+                .as("Polluting cars")
+                .expectComplete()
+                .verifyThenAssertThat(Duration.ofSeconds(4L))
+                .hasDiscardedExactly(Stream.concat(
+                        simulatedTraffic.cleanCars.stream(),
+                        simulatedTraffic.invalidCars.stream()
+                ).toArray());
     }
 
     @Getter

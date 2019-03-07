@@ -10,10 +10,6 @@ class Product {
     private final ProductId id;
     private final String description;
 
-    static Product productFrom(ProductId id, String description) {
-        return new Product(id, description);
-    }
-
     static final Product INVALID_PRODUCT = new Product(productIdFrom(-1), "Invalid product");
 
 }
